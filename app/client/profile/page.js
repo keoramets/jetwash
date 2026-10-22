@@ -1,0 +1,2 @@
+import { requireRole } from '@/lib/auth';import { ProfileForm } from '@/components/forms/ProfileForm';
+export default async function Profile(){const user=await requireRole('CLIENT');return <><div className="section-heading"><div><span className="eyebrow">Account settings</span><h2>Client Profile</h2><p>Update your contact and company information. Email address changes require administrator assistance.</p></div></div><ProfileForm user={JSON.parse(JSON.stringify(user))}/></>}

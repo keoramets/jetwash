@@ -1,0 +1,5 @@
+import Link from 'next/link';
+import { RegisterForm } from '@/components/forms/RegisterForm';
+import { metadata as makeMetadata } from '@/lib/seo';
+export const metadata=makeMetadata({title:'Client Registration',path:'/register',description:'Register a company account for the JetWash client portal.',noIndex:true});
+export default function Register(){return <main style={{minHeight:'100vh',background:'linear-gradient(90deg,var(--navy) 0 38%,var(--blue) 38%)',padding:'40px'}}><div className="container" style={{display:'grid',gridTemplateColumns:'1fr 1.45fr',gap:'50px',alignItems:'center'}}><section style={{color:'#fff'}}><Link className="brand" href="/"><span className="brand-mark">JW</span>JETWASH</Link><h1 style={{fontSize:'4rem',lineHeight:1,marginTop:'80px'}}>Precision <span style={{color:'var(--green-2)'}}>Industrial</span> Partners.</h1><p style={{color:'#b8c7d3'}}>Join the client portal to manage quote requests, operational documents, job progress, communications, and billing.</p></section><section className="auth-card" style={{width:'100%'}}><RegisterForm/></section></div></main>}

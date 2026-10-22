@@ -1,0 +1,1 @@
+export function StatCard({label,value,note,accent=false,icon='•'}){return <article className={accent?'stat-card accent':'stat-card'}><div className="stat-icon">{icon}</div><span>{label}</span><strong>{value}</strong>{note&&<small>{note}</small>}</article>}

@@ -1,0 +1,4 @@
+'use client';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+export function ApprovalButtons({userId}){const router=useRouter();const[busy,setBusy]=useState(false);async function act(status){const reason=status==='REJECTED'?window.prompt('Reason for rejection:')||'Registration did not meet approval requirements.':undefined;setBusy(true);await fetch(`/api/admin/clients/${userId}/status`,{method:'PATCH',headers:{'content-type':'application/json'},body:JSON.stringify({status,reason})});setBusy(false);router.refresh();}return <div className="button-row"><button disabled={busy} className="button button-primary button-small" onClick={()=>act('ACTIVE')}>Approve</button><button disabled={busy} className="button button-secondary button-small" onClick={()=>act('MORE_INFO_REQUIRED')}>Request Info</button><button disabled={busy} className="button button-danger button-small" onClick={()=>act('REJECTED')}>Reject</button></div>}

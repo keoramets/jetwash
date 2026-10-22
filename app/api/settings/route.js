@@ -1,0 +1,3 @@
+import { prisma } from '@/lib/prisma';import { apiAdmin } from '@/lib/api-auth';import { validOrigin,jsonError } from '@/lib/security';
+const allowed=['companyName','companyEmail','companyPhone','companyAddress','paymentInstructions','quotationTerms'];
+export async function PUT(request){if(!validOrigin(request))return jsonError('Invalid origin.',403);const auth=await apiAdmin();if(auth.error)return auth.error;const body=await request.json();await prisma.$transaction(allowed.filter(k=>body[k]!==undefined).map(key=>prisma.siteSetting.upsert({where:{key},update:{value:String(body[key]).slice(0,5000)},create:{key,value:String(body[key]).slice(0,5000),group:key.includes('Instructions')||key.includes('Terms')?'commercial':'company'}})));return Response.json({ok:true})}

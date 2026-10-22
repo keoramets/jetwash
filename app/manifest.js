@@ -1,0 +1,1 @@
+export default function manifest(){return {name:'JetWash [PVT] LTD',short_name:'JetWash',description:'Industrial cleaning and precision maintenance portal',start_url:'/',display:'standalone',background_color:'#f5f8fd',theme_color:'#008254',icons:[{src:'/images/placeholders/favicon.svg',sizes:'any',type:'image/svg+xml'}]}}

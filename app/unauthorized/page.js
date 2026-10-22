@@ -1,0 +1,1 @@
+import Link from 'next/link';export const metadata={title:'Access denied',robots:{index:false}};export default function Unauthorized(){return <main className="not-found"><div><strong>403</strong><h1>Access denied</h1><p>Your account does not have permission to open this section.</p><Link className="button button-primary" href="/login">Return to Login</Link></div></main>}
