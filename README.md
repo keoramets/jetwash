@@ -88,7 +88,8 @@ prisma/
   seed.js                   Demo records and users
 prisma.config.js             Prisma 7 schema, migration, and seed configuration
 generated/prisma/            Generated client; created during install and ignored by Git
-public/images/placeholders/ Replaceable SVG image placeholders
+public/images/photos/      Photos used on the public pages (see lib/photos.js)
+public/images/placeholders/ Drawn placeholders (favicon, map, pattern)
 scripts/
   create-admin.js           Create/update a production administrator
   check-project.js          Basic structure and JS-only check
@@ -312,29 +313,26 @@ npx prisma studio
 ```
 Opens a local database browser.
 
-## 12. Replacing the image placeholders
+## 12. Photos
 
-Placeholder files are in:
+The public pages use photos from `public/images/photos/`, listed in `lib/photos.js`:
 
-```text
-public/images/placeholders/
-```
+- `photos`: the home hero, the home "Our Legacy" photo, the services page and the about page.
+- `servicePhotos`: one photo per service, by slug. A service shows its own photo unless an image path is set for it
+  in **Admin → Content**.
+- `public/images/og-image.jpg`: the 1200×630 image shown when a page is shared on WhatsApp, Facebook or LinkedIn.
+- `public/images/photos/login.jpg`: the background of the sign-in pages.
 
-You can replace an SVG with a real file and update the path in the related page or database record.
+For now these are free stock photos from Unsplash (Unsplash License: free for commercial use, no credit required).
+They show the kind of work JetWash does, not JetWash's own jobs, staff or equipment, so never caption them as JetWash
+work and never use them for projects. Third-party logos and phone numbers in them were blurred out.
 
-Recommended source sizes:
+To use JetWash's own photos, replace the file in `public/images/photos/` with one of the same name (landscape,
+about 1600 pixels wide, JPG), then update its `alt`, `by` and `source` in `lib/photos.js`. Only use photos JetWash
+has approved, and don't publish client sites, logos or people's faces without their permission.
 
-| Image | Recommended size |
-|---|---:|
-| Home hero | 1920×1080 or larger |
-| Open Graph share image | 1200×630 |
-| Service card | 1200×750 |
-| Project card | 1400×900 |
-| Leadership portrait | 900×1200 |
-| CTA background | 1600×600 |
-| Client logo | SVG preferred, or transparent PNG at 600×240 |
-
-Use compressed WebP or AVIF where practical. Add accurate alternative text. Do not upload client logos, employee portraits, or project photographs without written authorization.
+The remaining files in `public/images/placeholders/` are drawn placeholders: the favicon, the contact map, the
+quote-section pattern and the image for projects that have none.
 
 ## 13. Customizing content
 
@@ -375,7 +373,7 @@ The project includes:
 Before launch:
 
 1. Set `NEXT_PUBLIC_SITE_URL` to the final HTTPS domain.
-2. Replace `/public/images/placeholders/og-image.svg` with an approved 1200×630 brand image.
+2. Check `/public/images/og-image.jpg` (the 1200×630 share image) with JetWash.
 3. Review every page title, description, H1, business claim, address, phone number, and service area.
 4. Add approved project case studies and client references.
 5. Test `/sitemap.xml` and `/robots.txt` on the production domain.
@@ -662,7 +660,7 @@ Check `NEXTAUTH_SECRET`, account status, cookie settings, production HTTPS, and 
 This is expected until an administrator approves it under **Admin → Approvals**.
 
 ### Images do not load
-Confirm the file exists under `public/` and use a URL beginning with `/`, such as `/images/placeholders/industrial-hero.svg`.
+Confirm the file exists under `public/` and use a URL beginning with `/`, such as `/images/photos/hero.jpg`.
 
 ### Upload works locally but disappears online
 The hosting filesystem is ephemeral. Configure Cloudinary and set `UPLOAD_PROVIDER=cloudinary`.

@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = await prisma.project.findUnique({ where: { slug }, select: { title: true, summary: true, imageUrl: true } }).catch(() => null);
   if (!project) return makeMetadata({ title: 'Project Not Found', description: 'The requested JetWash project could not be found.', path: `/projects/${slug}`, noIndex: true });
-  return makeMetadata({ title: project.title, description: project.summary, path: `/projects/${slug}`, image: project.imageUrl || '/images/placeholders/og-image.svg' });
+  return makeMetadata({ title: project.title, description: project.summary, path: `/projects/${slug}`, image: project.imageUrl || '/images/og-image.jpg' });
 }
 
 export default async function ProjectDetail({ params }) {

@@ -16,7 +16,7 @@ async function main(){
 
   // The real JetWash services (lib/company.js). Old demo services stay in an existing database until removed.
   const services=jetwashServices;
-  for(const [name,slug,category,shortDescription] of services){await prisma.service.upsert({where:{slug},update:{name,category,shortDescription,fullDescription:shortDescription,isActive:true},create:{name,slug,category,shortDescription,fullDescription:shortDescription,imageUrl:'/images/placeholders/factory-cleaning.svg',isActive:true}})}
+  for(const [name,slug,category,shortDescription] of services){await prisma.service.upsert({where:{slug},update:{name,category,shortDescription,fullDescription:shortDescription,isActive:true},create:{name,slug,category,shortDescription,fullDescription:shortDescription,isActive:true}})}
 
   const projects=[
     ['Turbine Restoration: Apex Energy Hub','turbine-restoration-apex','Heavy Equipment'],
