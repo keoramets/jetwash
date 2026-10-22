@@ -46,7 +46,7 @@ async function main(){
   await prisma.notification.deleteMany({where:{userId:client.id,type:{startsWith:'DEMO_'}}});
   await prisma.notification.createMany({data:[{userId:client.id,title:'Quotation ready',message:'QT-DEMO-001 is ready for review.',type:'DEMO_QUOTATION',linkUrl:`/client/quotes/${quotation.id}`},{userId:client.id,title:'Job in progress',message:'JW-DEMO-001 is 78% complete.',type:'DEMO_JOB',linkUrl:`/client/jobs/${job.id}`},{userId:client.id,title:'Invoice issued',message:'INV-DEMO-001 is available in the billing portal.',type:'DEMO_INVOICE',linkUrl:'/client/invoices'}]});
 
-  const settings={companyName:'JetWash (Pvt) Ltd',companyEmail:'info@jetwash.co.zw',companyPhone:'+263 77 123 4567',companyAddress:'Industrial Park South, Harare, Zimbabwe',paymentInstructions:'Replace with approved banking, EcoCash, PayNow, or other payment instructions.',quotationTerms:'Quotation valid until the stated expiry date. Scheduling is confirmed after written acceptance.'};
+  const settings={companyName:'JetWash (Pvt) Ltd',companyEmail:'info@jetwash.co.zw',companyPhone:'+263 772 327 148',companyAddress:'Harare, Zimbabwe',paymentInstructions:'Replace with approved banking, EcoCash, PayNow, or other payment instructions.',quotationTerms:'Quotation valid until the stated expiry date. Scheduling is confirmed after written acceptance.'};
   for(const [key,value] of Object.entries(settings))await prisma.siteSetting.upsert({where:{key},update:{value},create:{key,value,group:'seed'}});
   console.log('Seed complete.');
   console.log('Admin: admin@jetwash.co.zw / ChangeMe123!');

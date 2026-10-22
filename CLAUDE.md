@@ -12,7 +12,8 @@ JavaScript (JSX). Public website, client portal (quotes, jobs, invoices) and adm
 ## Rules
 - Company facts and services live in `lib/company.js`. Only put in what JetWash has confirmed. Never invent clients,
   testimonials, project results, figures or leadership quotes; leave a section out until the real content exists.
-- Contact details come from the environment (`COMPANY_*`, `NEXT_PUBLIC_COMPANY_WHATSAPP`), not from code.
+- Contact details come from the environment (`COMPANY_*`, `NEXT_PUBLIC_COMPANY_WHATSAPP`). If one is missing, the site
+  falls back to JetWash's real details in `lib/seo.js`. Keep those, `.env.example` and `prisma/seed.js` in step.
 - Keep the JetWash brand (navy, emerald, pale blue). This is not a Global Alfabet product.
 - Plain JavaScript only (`npm run check` rejects TypeScript files). Prisma's generated client is build output.
 - Security: keep `next`, `react` and `nodemailer` patched; CI fails on high or critical advisories in runtime
