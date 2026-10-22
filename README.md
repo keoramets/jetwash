@@ -513,27 +513,22 @@ Remember: variables beginning with `NEXT_PUBLIC_` are included in browser bundle
 
 ### 18.5 Build and start settings
 
-Recommended build command:
+Leave Railway's build and start commands empty. Railway finds the `Dockerfile` and builds with it:
+
+- The build copies the site's styles and images into the standalone output (`npm run build` runs `postbuild`).
+- Every time the container starts, it runs `npx prisma migrate deploy` and then starts the site. New migrations are
+  applied before any request is served, so no separate pre-deploy command is needed.
+- Railway passes the service's `NEXT_PUBLIC_*` variables into the build. These are baked into the pages, so redeploy
+  after changing one.
+
+To try the production image on your own computer first:
 
 ```bash
-npm ci && npx prisma generate && npm run build
+docker compose up --build
 ```
 
-`npm ci` also runs the project `postinstall` generator. The explicit `prisma generate` is kept in the Railway build command so a missing generated client fails early and clearly.
-
-Recommended start command:
-
-```bash
-npm start
-```
-
-Recommended pre-deploy command:
-
-```bash
-npx prisma migrate deploy
-```
-
-Use Railway’s **Pre-Deploy Command** field for migrations. This is safer than running migrations every time the web process restarts.
+This starts PostgreSQL and the site on http://localhost:3000 with your `.env`. The database starts empty, so create an
+administrator (next section) before signing in.
 
 ### 18.6 Verify the committed migration
 
@@ -558,7 +553,8 @@ In the Railway service networking settings:
 
 ### 18.8 Create the production admin
 
-Temporarily set secure `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` variables. Use a Railway shell or one-off command to run:
+Temporarily set secure `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` variables. Open a shell in the running
+service (Railway CLI: `railway ssh`, or `docker compose exec app sh` locally) and run:
 
 ```bash
 npm run create-admin
