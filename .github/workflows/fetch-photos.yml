@@ -1,0 +1,27 @@
+# Temporary: downloads the Unsplash photos listed in photos.txt into incoming/ and commits them to this branch.
+name: fetch-photos
+on:
+  push:
+    branches: [tmp/fetch-photos]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download
+        run: |
+          mkdir -p incoming
+          while read -r name id; do
+            [ -z "$name" ] && continue
+            curl -fsSL --retry 3 -o "incoming/$name.jpg" "https://images.unsplash.com/$id?fm=jpg&q=85&w=2400&fit=max"
+            echo "$name $(stat -c %s incoming/$name.jpg)"
+          done < photos.txt
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add incoming
+          git commit -m "chore: downloaded photos"
+          git push
