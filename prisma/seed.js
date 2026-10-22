@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { PrismaClient } from '../generated/prisma/client.ts';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { services as jetwashServices } from '../lib/company.js';
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
@@ -13,17 +14,8 @@ async function main(){
   const client=await prisma.user.upsert({where:{email:'client@apex.example'},update:{name:'Marcus Thorne',passwordHash:clientPasswordHash,role:'CLIENT',status:'ACTIVE',companyId:company.id},create:{name:'Marcus Thorne',email:'client@apex.example',passwordHash:clientPasswordHash,phone:'+263 77 555 0110',role:'CLIENT',status:'ACTIVE',companyId:company.id,emailVerified:new Date()}});
   await prisma.clientProfile.upsert({where:{userId:client.id},update:{companyId:company.id,position:'Facility Director',approvalStatus:'APPROVED',approvedById:admin.id,approvedAt:new Date()},create:{userId:client.id,companyId:company.id,position:'Facility Director',approvalStatus:'APPROVED',approvedById:admin.id,approvedAt:new Date()}});
 
-  const services=[
-    ['High Pressure Cleaning','high-pressure-cleaning','Industrial','Controlled hydro-cleaning for equipment, floors, tanks, and structural surfaces.'],
-    ['Industrial Machinery Cleaning','industrial-machinery-cleaning','Industrial','Precision cleaning around production equipment and sensitive assemblies.'],
-    ['Boiler & Tank Restoration','boiler-tank-restoration','Specialized','Scale, residue, and internal surface restoration for contained assets.'],
-    ['Cooling Tower Maintenance','cooling-tower-maintenance','Specialized','Cleaning and inspection support for thermal performance and system longevity.'],
-    ['Chemical Cleaning','chemical-cleaning','Specialized','Engineered chemical processes for complex contamination and residue removal.'],
-    ['Drain & Sewer Technology','drain-sewer-technology','Infrastructure','Inspection, blockage removal, and high-flow jetting.'],
-    ['Sludge & Waste','sludge-waste','Environmental','Controlled collection, handling, and disposal workflow support.'],
-    ['Fuel Tank Degassing','fuel-tank-degassing','Hazmat','Preparation and gas-free support for inspection and maintenance.'],
-    ['Vehicle & Fleet Care','vehicle-fleet-care','Fleet','Commercial vehicle, fleet, and heavy equipment cleaning.']
-  ];
+  // The real JetWash services (lib/company.js). Old demo services stay in an existing database until removed.
+  const services=jetwashServices;
   for(const [name,slug,category,shortDescription] of services){await prisma.service.upsert({where:{slug},update:{name,category,shortDescription,fullDescription:shortDescription,isActive:true},create:{name,slug,category,shortDescription,fullDescription:shortDescription,imageUrl:'/images/placeholders/factory-cleaning.svg',isActive:true}})}
 
   const projects=[
@@ -54,7 +46,7 @@ async function main(){
   await prisma.notification.deleteMany({where:{userId:client.id,type:{startsWith:'DEMO_'}}});
   await prisma.notification.createMany({data:[{userId:client.id,title:'Quotation ready',message:'QT-DEMO-001 is ready for review.',type:'DEMO_QUOTATION',linkUrl:`/client/quotes/${quotation.id}`},{userId:client.id,title:'Job in progress',message:'JW-DEMO-001 is 78% complete.',type:'DEMO_JOB',linkUrl:`/client/jobs/${job.id}`},{userId:client.id,title:'Invoice issued',message:'INV-DEMO-001 is available in the billing portal.',type:'DEMO_INVOICE',linkUrl:'/client/invoices'}]});
 
-  const settings={companyName:'JetWash [PVT] LTD',companyEmail:'info@jetwash.co.zw',companyPhone:'+263 77 123 4567',companyAddress:'Industrial Park South, Harare, Zimbabwe',paymentInstructions:'Replace with approved banking, EcoCash, PayNow, or other payment instructions.',quotationTerms:'Quotation valid until the stated expiry date. Scheduling is confirmed after written acceptance.'};
+  const settings={companyName:'JetWash (Pvt) Ltd',companyEmail:'info@jetwash.co.zw',companyPhone:'+263 77 123 4567',companyAddress:'Industrial Park South, Harare, Zimbabwe',paymentInstructions:'Replace with approved banking, EcoCash, PayNow, or other payment instructions.',quotationTerms:'Quotation valid until the stated expiry date. Scheduling is confirmed after written acceptance.'};
   for(const [key,value] of Object.entries(settings))await prisma.siteSetting.upsert({where:{key},update:{value},create:{key,value,group:'seed'}});
   console.log('Seed complete.');
   console.log('Admin: admin@jetwash.co.zw / ChangeMe123!');

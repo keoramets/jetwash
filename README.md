@@ -1,6 +1,6 @@
-# JetWash [PVT] LTD — Full-Stack Website and Operations Portal
+# JetWash (Pvt) Ltd — Full-Stack Website and Operations Portal
 
-A production-oriented **JavaScript/JSX application** built with Next.js for JetWash [PVT] LTD. It combines a public industrial-services website, a secure client portal, an admin/staff operations portal, PostgreSQL, Prisma ORM, custom cookie-based authentication, role-based access control, quotation and invoice PDFs, payment-proof review, email notifications, file uploads, structured SEO, Google Analytics support, and Railway deployment instructions. All application code is JavaScript/JSX; Prisma generates an internal TypeScript client during installation, which is build output and is not committed.
+A production-oriented **JavaScript/JSX application** built with Next.js for JetWash (Pvt) Ltd. It combines a public industrial-services website, a secure client portal, an admin/staff operations portal, PostgreSQL, Prisma ORM, custom cookie-based authentication, role-based access control, quotation and invoice PDFs, payment-proof review, email notifications, file uploads, structured SEO, Google Analytics support, and Railway deployment instructions. All application code is JavaScript/JSX; Prisma generates an internal TypeScript client during installation, which is build output and is not committed.
 
 > **Important:** The included company facts, project stories, client names, numbers, legal pages, images, and contact details are placeholders or demo data. Replace them with verified, company-approved material before launch.
 

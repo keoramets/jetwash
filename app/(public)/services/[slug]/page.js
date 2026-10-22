@@ -22,7 +22,7 @@ export default async function ServiceDetail({ params }) {
     name: service.name,
     description: service.fullDescription,
     areaServed: { '@type': 'Country', name: 'Zimbabwe' },
-    provider: { '@type': 'Organization', name: 'JetWash [PVT] LTD' }
+    provider: { '@type': 'Organization', name: 'JetWash (Pvt) Ltd' }
   };
   return <>
     <JsonLd data={jsonLd} />
