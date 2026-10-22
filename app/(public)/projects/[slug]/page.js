@@ -24,7 +24,7 @@ export default async function ProjectDetail({ params }) {
     description: project.summary,
     dateCreated: project.completionDate?.toISOString(),
     locationCreated: project.location,
-    creator: { '@type': 'Organization', name: 'JetWash [PVT] LTD' }
+    creator: { '@type': 'Organization', name: 'JetWash (Pvt) Ltd' }
   };
   return <>
     <JsonLd data={jsonLd} />
