@@ -15,6 +15,11 @@ JavaScript (JSX). Public website, client portal (quotes, jobs, invoices) and adm
 - Contact details come from the environment (`COMPANY_*`, `NEXT_PUBLIC_COMPANY_WHATSAPP`). If one is missing, the site
   falls back to JetWash's real details in `lib/seo.js`. Keep those, `.env.example` and `prisma/seed.js` in step.
 - Keep the JetWash brand (navy, emerald, pale blue). This is not a Global Alfabet product.
+- Photos are listed in `lib/photos.js` with who took them and where they came from. Use JetWash's own approved photos
+  or free-licensed stock photos (Unsplash, Pexels, or Wikimedia Commons with the credit its licence asks for). Never
+  copy a photo from another website. Stock
+  photos only illustrate the kind of work: never caption them as JetWash jobs, staff or results, never use them for
+  projects, and blur out other companies' logos and phone numbers.
 - Plain JavaScript only (`npm run check` rejects TypeScript files). Prisma's generated client is build output.
 - Security: keep `next`, `react` and `nodemailer` patched; CI fails on high or critical advisories in runtime
   dependencies. Never commit `.env` files or secrets.
