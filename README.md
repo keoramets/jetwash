@@ -89,7 +89,7 @@ prisma/
 prisma.config.js             Prisma 7 schema, migration, and seed configuration
 generated/prisma/            Generated client; created during install and ignored by Git
 public/images/photos/      Photos used on the public pages (see lib/photos.js)
-public/images/placeholders/ Drawn placeholders (favicon, map, pattern)
+public/images/placeholders/ Drawn placeholders (pattern, project image)
 scripts/
   create-admin.js           Create/update a production administrator
   check-project.js          Basic structure and JS-only check
@@ -331,8 +331,8 @@ To use JetWash's own photos, replace the file in `public/images/photos/` with on
 about 1600 pixels wide, JPG), then update its `alt`, `by` and `source` in `lib/photos.js`. Only use photos JetWash
 has approved, and don't publish client sites, logos or people's faces without their permission.
 
-The remaining files in `public/images/placeholders/` are drawn placeholders: the favicon, the contact map, the
-quote-section pattern and the image for projects that have none.
+The remaining files in `public/images/placeholders/` are drawn placeholders: the quote-section pattern and the
+image for projects that have none.
 
 ## 13. Customizing content
 
@@ -350,7 +350,13 @@ COMPANY_NAME=
 COMPANY_EMAIL=
 COMPANY_PHONE=
 COMPANY_ADDRESS=
+COMPANY_LATITUDE=
+COMPANY_LONGITUDE=
 ```
+
+The contact page shows a Google Maps embed of `COMPANY_LATITUDE`/`COMPANY_LONGITUDE` (decimal degrees, south
+negative) with **Get directions** and **Open in Google Maps** links. The embed needs no Google API key. Without the
+variables, the site uses JetWash's location in `lib/seo.js`.
 
 Admin-managed commercial defaults are stored in `SiteSetting`.
 
