@@ -9,7 +9,10 @@ export const metadata = {
   description: site.description,
   metadataBase: new URL(site.url),
   verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined },
-  icons: { icon: '/images/placeholders/favicon.svg' }
+  icons: {
+    icon: [{ url: '/favicon.ico', sizes: '48x48' }, { url: '/images/brand/jetwash-favicon.svg', type: 'image/svg+xml' }],
+    apple: '/images/brand/apple-touch-icon.png'
+  }
 };
 
 export default function RootLayout({ children }) {
