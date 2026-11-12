@@ -1,1 +1,0 @@
-export function EmptyState({title='Nothing here yet',message='Records will appear here when available.',action}){return <div className="empty-state"><div>◇</div><h3>{title}</h3><p>{message}</p>{action}</div>}
