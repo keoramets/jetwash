@@ -4,10 +4,7 @@ out/
 .env
 .env.local
 .env.*.local
-public/uploads/*
-!public/uploads/.gitkeep
 *.log
 .DS_Store
 coverage/
 
-/generated/

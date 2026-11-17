@@ -1,0 +1,46 @@
+# JetWash website on Netlify: a static site built by Next.js (next.config.mjs: output 'export').
+# Forms (contact, quote-request) are Netlify Forms: see components/forms. Set who gets them by email in Netlify:
+# Site configuration → Forms → Form notifications.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+# Next.js puts content-hashed files in /_next/static: safe to cache for a year.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Old portal and sign-in addresses from the full-stack site go to the contact page.
+[[redirects]]
+  from = "/login"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/register"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/admin-login"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/client/*"
+  to = "/contact"
+  status = 301
+[[redirects]]
+  from = "/admin/*"
+  to = "/contact"
+  status = 301

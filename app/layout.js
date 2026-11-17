@@ -2,8 +2,6 @@ import './globals.css';
 import { Analytics } from '@/components/seo/Analytics';
 import { site } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = {
   title: { default: `${site.name} | Industrial Cleaning Zimbabwe`, template: `%s | ${site.name}` },
   description: site.description,

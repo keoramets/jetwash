@@ -1,17 +1,16 @@
-import { prisma } from '@/lib/prisma';
 import { site } from '@/lib/seo';
+import { services } from '@/lib/company';
+import { projects } from '@/lib/projects';
 
-export const dynamic = 'force-dynamic';
+// Written once, when the site is built (static export).
+export const dynamic = 'force-static';
 
-export default async function sitemap() {
+export default function sitemap() {
+  const built = new Date();
   const staticPaths = ['', '/about', '/services', '/projects', '/clients', '/contact', '/request-quote', '/privacy', '/terms'];
-  const [projects, services] = await Promise.all([
-    prisma.project.findMany({ select: { slug: true, updatedAt: true } }).catch(() => []),
-    prisma.service.findMany({ where: { isActive: true }, select: { slug: true, updatedAt: true } }).catch(() => [])
-  ]);
   return [
-    ...staticPaths.map((path) => ({ url: `${site.url}${path}`, lastModified: new Date(), changeFrequency: path === '' ? 'weekly' : 'monthly', priority: path === '' ? 1 : 0.7 })),
-    ...services.map((service) => ({ url: `${site.url}/services/${service.slug}`, lastModified: service.updatedAt, changeFrequency: 'monthly', priority: 0.7 })),
-    ...projects.map((project) => ({ url: `${site.url}/projects/${project.slug}`, lastModified: project.updatedAt, changeFrequency: 'monthly', priority: 0.6 }))
+    ...staticPaths.map((path) => ({ url: `${site.url}${path}`, lastModified: built, changeFrequency: path === '' ? 'weekly' : 'monthly', priority: path === '' ? 1 : 0.7 })),
+    ...services.map(([, slug]) => ({ url: `${site.url}/services/${slug}`, lastModified: built, changeFrequency: 'monthly', priority: 0.7 })),
+    ...projects.map((project) => ({ url: `${site.url}/projects/${project.slug}`, lastModified: project.completionDate ? new Date(project.completionDate) : built, changeFrequency: 'monthly', priority: 0.6 }))
   ];
 }

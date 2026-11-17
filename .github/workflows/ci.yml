@@ -8,9 +8,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      # Build-time placeholders only. The real values are set on the host (Railway), never in git.
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/jetwash?schema=public
-      NEXTAUTH_SECRET: ci-only-not-a-real-secret-ci-only-not-a-real-secret
+      # Build-time only. On Netlify, URL is set automatically; this keeps canonical links valid in CI.
       NEXT_PUBLIC_SITE_URL: https://example.com
     steps:
       - uses: actions/checkout@v4
@@ -22,15 +20,6 @@ jobs:
       - run: npm run lint
       - run: npm run check
       - run: npm run build
+      # The static site Netlify publishes, with both forms in it for Netlify Forms to find
+      - run: test -f out/index.html && grep -q 'name="contact"' out/contact.html && grep -q 'name="quote-request"' out/request-quote.html && echo "site ok"
       - run: npm audit --omit=dev --audit-level=high
-
-  docker:
-    runs-on: ubuntu-latest
-    needs: check
-    steps:
-      - uses: actions/checkout@v4
-      - run: docker build -t jetwash .
-      # The image must contain the site, its styles, and what migrations need
-      - run: |
-          docker run --rm --entrypoint sh jetwash -c "test -f server.js && test -d .next/static && test -d public && test -x node_modules/.bin/prisma && test -d generated/prisma && echo image ok"
-
